@@ -307,9 +307,20 @@ spiral_sum_f(N) -> spiral_sum_list_f(filter_odd(naturals(N))).
 ### Реализация с map
 
 ```erlang
-ToDo
+spiral_sum_list(OddList) ->
+    reduce_list(shifted_square(OddList, 0, 0)) +
+    reduce_list(shifted_square(OddList, 0, -2)) +
+    reduce_list(shifted_square(OddList, 0, -4)) +
+    reduce_list(shifted_square(OddList, 0, -6)) - 3.
+
+
+% Map
+spiral_sum_m(N) -> spiral_sum_list(lists:map(fun(X) -> 2 * (X - 1) + 1 end, naturals(N div 2 + 1))).
 ```
 
 ## Выводы
 
-В ходе выполнения работы ToDo
+В ходе выполнения работы я ознакомился с языком Erlang и базовыми принципами функционального программирования.
+Я реализовал две задачи из проекта Эйлер в нескольких вариантах: с обычной рекурсией, с хвостовой, со свёрткой (fold) с отображением (map).
+Для второй задачи я нашел математическое решение, работающее быстрее алогитмических. К реализациям были написаны тесты.
+Также для сравнения обе задачи были реализованы также на языке C.
