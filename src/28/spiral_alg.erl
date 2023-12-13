@@ -1,6 +1,8 @@
--module(lab1_28f).
+-module(spiral_alg).
 
--export([naturals/1, filter_odd/1, shifted_square/3, reduce_list/1, reduce_list_t/1, spiral_sum/1, spiral_sum_t/1, spiral_sum_f/1]).
+-export([naturals/1, filter_odd/1, shifted_square/3]).
+-export([reduce_list/1, reduce_list_t/1]).
+-export([spiral_sum/1, spiral_sum_t/1, spiral_sum_f/1]).
 
 % List generation
 naturals(N) -> naturals(N, N, []).
@@ -33,7 +35,7 @@ reduce_list_t([H | T], Sum) -> reduce_list_t(T, Sum + H).
 
 
 % (Map, Reduce) x 4
-spiral_sum_list(OddList) -> 
+spiral_sum_list(OddList) ->
     reduce_list(shifted_square(OddList, 0, 0)) +
     reduce_list(shifted_square(OddList, 0, -2)) +
     reduce_list(shifted_square(OddList, 0, -4)) +
@@ -45,7 +47,7 @@ spiral_sum(N) -> spiral_sum_list(filter_odd(naturals(N))).
 
 
 % (Map, Reduce) x 4
-spiral_sum_list_t(OddList) -> 
+spiral_sum_list_t(OddList) ->
     reduce_list_t(shifted_square(OddList, 0, 0)) +
     reduce_list_t(shifted_square(OddList, 0, -2)) +
     reduce_list_t(shifted_square(OddList, 0, -4)) +
