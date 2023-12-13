@@ -70,5 +70,5 @@ spiral_sum_list_f(OddList) ->
 spiral_sum_f(N) -> spiral_sum_list_f(filter_odd(naturals(N))).
 
 
-% Map and Filte
+% Map
 spiral_sum_m(N) -> spiral_sum_list(lists:map(fun(X) -> 2 * (X - 1) + 1 end, naturals(N div 2 + 1))).
