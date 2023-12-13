@@ -5,6 +5,10 @@
 -export([reduce_factors/1, reduce_factors_t/1]).
 -export([get_max_factor/1, get_max_factor_t/1, get_max_factor_f/1]).
 
+get_max(A, B) when A > B -> A;
+get_max(_, B) -> B.
+
+
 % Tail recursion
 is_prime(N) -> is_prime(N, 2, round(math:sqrt(N))).
 
@@ -41,12 +45,7 @@ filter_factors(N, [_ | T]) -> filter_factors(N, T).
 
 % Reduce list of factors (recursion)
 reduce_factors([]) -> 0;
-reduce_factors([H | T]) ->
-    TailFactor = reduce_factors(T),
-    case (TailFactor > H) of
-        true -> TailFactor;
-        false -> H
-    end.
+reduce_factors([H | T]) -> get_max(reduce_factors(T), H).
 
 
 % Reduce list of factors (tail recursion)
@@ -75,10 +74,5 @@ get_max_factor_t(N) ->
 get_max_factor_f(0) -> error;
 get_max_factor_f(1) -> error;
 get_max_factor_f(N) ->
-    lists:foldl(fun(X, Acc) ->
-            case (X > Acc) of
-                true -> X;
-                false -> Acc
-            end
-        end,
+    lists:foldl(fun(X, Acc) -> get_max(X, Acc) end,
         0, filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
