@@ -167,7 +167,7 @@ get_max_factor_f(N) ->
         0, filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
 ```
 
-## Задача 28. Reciprocal Cycles
+## Задача 28. Number Spiral Diagonals
 
 <p>Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:</p>
 <p class="monospace center"><span class="red"><b>21</b></span> 22 23 24 <span class="red"><b>25</b></span><br>
