@@ -33,11 +33,11 @@ reduce_list_t([H | T], Sum) -> reduce_list_t(T, Sum + H).
 
 
 % (Map, Reduce) x 4
-spiral_sum_list(Odd_List) -> 
-    reduce_list(shifted_square(Odd_List, 0, 0)) + 
-    reduce_list(shifted_square(Odd_List, 0, -2)) + 
-    reduce_list(shifted_square(Odd_List, 0, -4)) + 
-    reduce_list(shifted_square(Odd_List, 0, -6)) - 3.
+spiral_sum_list(OddList) -> 
+    reduce_list(shifted_square(OddList, 0, 0)) + 
+    reduce_list(shifted_square(OddList, 0, -2)) + 
+    reduce_list(shifted_square(OddList, 0, -4)) + 
+    reduce_list(shifted_square(OddList, 0, -6)) - 3.
 
 
 % Generate, Filter, Map + Reduce
@@ -57,11 +57,11 @@ spiral_sum_t(N) -> spiral_sum_list_t(filter_odd(naturals(N))).
 
 
 % Fold
-spiral_sum_list_f(Odd_List) -> 
-    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(Odd_List, 0, 0)) +
-    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(Odd_List, 0, -2)) +
-    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(Odd_List, 0, -4)) +
-    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(Odd_List, 0, -6)) - 3.
+spiral_sum_list_f(OddList) -> 
+    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(OddList, 0, 0)) +
+    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(OddList, 0, -2)) +
+    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(OddList, 0, -4)) +
+    lists:foldl(fun(X, Acc) -> X + Acc end, 0, shifted_square(OddList, 0, -6)) - 3.
 
 
 % Generate, Filter, Fold
