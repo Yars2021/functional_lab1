@@ -262,11 +262,11 @@ spiral_sum_list(OddList) ->
     reduce_list(shifted_square(OddList, 0, -6)) - 3.
 
 
-% Generate, Filter, Map + Reduce
+% Generate, Filter, Reduce
 spiral_sum(N) -> spiral_sum_list(filter_odd(naturals(N))).
 ```
 
-### Реализация с хвостовой рекурсией
+### Реализация с хвостовой рекурсией и filter
 
 ```erlang
 % Reduce to sum (tail recursion)
@@ -284,9 +284,8 @@ spiral_sum_list_t(OddList) ->
     reduce_list_t(shifted_square(OddList, 0, -6)) - 3.
 
 
-% Generate, Filter, Map + Reduce
-spiral_sum_t(N) -> spiral_sum_list_t(filter_odd(naturals(N))).
-
+% Generate, Filter, Reduce
+spiral_sum_t(N) -> spiral_sum_list_t(lists:filter(fun(X) -> X rem 2 == 1 end, naturals(N))).
 ```
 
 ### Реализация со свёрткой
@@ -322,5 +321,6 @@ spiral_sum_m(N) -> spiral_sum_list(lists:map(fun(X) -> 2 * (X - 1) + 1 end, natu
 
 В ходе выполнения работы я ознакомился с языком Erlang и базовыми принципами функционального программирования.
 Я реализовал две задачи из проекта Эйлер в нескольких вариантах: с обычной рекурсией, с хвостовой, со свёрткой (fold) с отображением (map).
-Для второй задачи я нашел математическое решение, работающее быстрее алогитмических. К реализациям были написаны тесты.
+Во второй задаче были использованы библиотченые filter, foldl и map.
+Ещё для второй задачи я нашел математическое решение, работающее быстрее алогитмических. К реализациям были написаны тесты.
 Также для сравнения обе задачи были реализованы также на языке C.
