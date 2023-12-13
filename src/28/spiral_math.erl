@@ -1,4 +1,4 @@
--module(a).
+-module(spiral_math).
 
 -export([item_s/4, sum_s/4, spiral_sum/1]).
 
