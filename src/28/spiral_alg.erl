@@ -42,7 +42,7 @@ spiral_sum_list(OddList) ->
     reduce_list(shifted_square(OddList, 0, -6)) - 3.
 
 
-% Generate, Filter, Map + Reduce
+% Generate, Filter, Reduce
 spiral_sum(N) -> spiral_sum_list(filter_odd(naturals(N))).
 
 
@@ -54,8 +54,8 @@ spiral_sum_list_t(OddList) ->
     reduce_list_t(shifted_square(OddList, 0, -6)) - 3.
 
 
-% Generate, Filter, Map + Reduce
-spiral_sum_t(N) -> spiral_sum_list_t(filter_odd(naturals(N))).
+% Generate, Filter, Reduce
+spiral_sum_t(N) -> spiral_sum_list_t(lists:filter(fun(X) -> X rem 2 == 1 end, naturals(N))).
 
 
 % Fold
@@ -70,5 +70,5 @@ spiral_sum_list_f(OddList) ->
 spiral_sum_f(N) -> spiral_sum_list_f(filter_odd(naturals(N))).
 
 
-% Map
+% Map and Filte
 spiral_sum_m(N) -> spiral_sum_list(lists:map(fun(X) -> 2 * (X - 1) + 1 end, naturals(N div 2 + 1))).
