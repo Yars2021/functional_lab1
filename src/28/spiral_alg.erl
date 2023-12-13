@@ -2,7 +2,7 @@
 
 -export([naturals/1, filter_odd/1, shifted_square/3]).
 -export([reduce_list/1, reduce_list_t/1]).
--export([spiral_sum/1, spiral_sum_t/1, spiral_sum_f/1]).
+-export([spiral_sum/1, spiral_sum_t/1, spiral_sum_f/1, spiral_sum_m/1]).
 
 % List generation
 naturals(N) -> naturals(N, N, []).
@@ -68,3 +68,7 @@ spiral_sum_list_f(OddList) ->
 
 % Generate, Filter, Fold
 spiral_sum_f(N) -> spiral_sum_list_f(filter_odd(naturals(N))).
+
+
+% Map
+spiral_sum_m(N) -> spiral_sum_list(lists:map(fun(X) -> 2 * (X - 1) + 1 end, naturals(N div 2 + 1))).
