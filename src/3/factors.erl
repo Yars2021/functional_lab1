@@ -1,6 +1,9 @@
--module(lab1_3f).
+-module(factors).
 
--export([is_prime/1, naturals/1, filter_primes/1, filter_factors/2, reduce_factors/1, reduce_factors_t/1, get_max_factor/1, get_max_factor_t/1, get_max_factor_f/1]).
+-export([is_prime/1, naturals/1]).
+-export([filter_primes/1, filter_factors/2]).
+-export([reduce_factors/1, reduce_factors_t/1]).
+-export([get_max_factor/1, get_max_factor_t/1, get_max_factor_f/1]).
 
 % Tail recursion
 is_prime(N) -> is_prime(N, 2, round(math:sqrt(N))).
@@ -22,11 +25,11 @@ naturals(N, C, L) -> naturals(N, C - 1, [C | L]).
 
 % List filtration (only primes)
 filter_primes([]) -> [];
-filter_primes([H | T]) -> 
+filter_primes([H | T]) ->
     HIsPrime = is_prime(H),
-    if
-        HIsPrime == true -> [H | filter_primes(T)];
-        true -> filter_primes(T)
+    case HIsPrime of
+        true -> [H | filter_primes(T)];
+        false -> filter_primes(T)
     end.
 
 
@@ -40,9 +43,9 @@ filter_factors(N, [_ | T]) -> filter_factors(N, T).
 reduce_factors([]) -> 0;
 reduce_factors([H | T]) ->
     TailFactor = reduce_factors(T),
-    if
-        TailFactor > H -> TailFactor;
-        true -> H
+    case (TailFactor > H) of
+        true -> TailFactor;
+        false -> H
     end.
 
 
@@ -57,23 +60,25 @@ reduce_factors_t([_ | T], M) -> reduce_factors_t(T, M).
 % Generate, Filter, Filter, Reduce
 get_max_factor(0) -> error;
 get_max_factor(1) -> error;
-get_max_factor(N) -> reduce_factors(filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
+get_max_factor(N) ->
+    reduce_factors(filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
 
 
 % Generate, Filter, Filter, Reduce
 get_max_factor_t(0) -> error;
 get_max_factor_t(1) -> error;
-get_max_factor_t(N) -> reduce_factors_t(filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
+get_max_factor_t(N) ->
+    reduce_factors_t(filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
 
 
 % Fold
 get_max_factor_f(0) -> error;
 get_max_factor_f(1) -> error;
-get_max_factor_f(N) -> 
-    lists:foldl(fun(X, Acc) -> 
-            if
-                X > Acc -> X;
-                true -> Acc
+get_max_factor_f(N) ->
+    lists:foldl(fun(X, Acc) ->
+            case (X > Acc) of
+                true -> X;
+                false -> Acc
             end
-        end, 
+        end,
         0, filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
