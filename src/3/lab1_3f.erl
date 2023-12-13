@@ -23,9 +23,9 @@ naturals(N, C, L) -> naturals(N, C - 1, [C | L]).
 % List filtration (only primes)
 filter_primes([]) -> [];
 filter_primes([H | T]) -> 
-    H_Is_Prime = is_prime(H),
+    HIsPrime = is_prime(H),
     if
-        H_Is_Prime == true -> [H | filter_primes(T)];
+        HIsPrime == true -> [H | filter_primes(T)];
         true -> filter_primes(T)
     end.
 
@@ -39,9 +39,9 @@ filter_factors(N, [_ | T]) -> filter_factors(N, T).
 % Reduce list of factors (recursion)
 reduce_factors([]) -> 0;
 reduce_factors([H | T]) ->
-    Tail_Factor = reduce_factors(T),
+    TailFactor = reduce_factors(T),
     if
-        Tail_Factor > H -> Tail_Factor;
+        TailFactor > H -> TailFactor;
         true -> H
     end.
 
