@@ -15,3 +15,8 @@ spiral_sum_t_test() ->
 spiral_sum_f_test() ->
     ?assertEqual(spiral_alg:spiral_sum_f(5), 101),
     ?assertEqual(spiral_alg:spiral_sum_f(1001), 669171001).
+
+% Map
+spiral_sum_m_test() ->
+    ?assertEqual(spiral_alg:spiral_sum_m(5), 101),
+    ?assertEqual(spiral_alg:spiral_sum_m(1001), 669171001).
