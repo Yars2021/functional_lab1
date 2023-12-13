@@ -1,4 +1,4 @@
--module(lab1_28_tests).
+-module(spiral_tests).
 -include_lib("eunit/include/eunit.hrl").
 
 % Reduce with normal recursion
