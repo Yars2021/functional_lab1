@@ -61,16 +61,6 @@ filter_primes([H | T]) ->
     end.
 
 
-% List filtration (only primes)
-filter_primes([]) -> [];
-filter_primes([H | T]) ->
-    HIsPrime = is_prime(H),
-    case HIsPrime of
-        true -> [H | filter_primes(T)];
-        false -> filter_primes(T)
-    end.
-
-
 % List filtration (only factors of N)
 filter_factors(_, []) -> [];
 filter_factors(N, [H | T]) when N rem H == 0 -> [H | filter_factors(N, T)];
