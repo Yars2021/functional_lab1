@@ -33,7 +33,7 @@ naturals_server(N) ->
     receive
         {From, next} ->
             From ! {self(), N},
-            naturals_server(N + 1)
+            naturals_server(N - 1)
     end.
 
 naturals_next(Pid) ->
@@ -44,11 +44,11 @@ naturals_next(Pid) ->
 
 
 naturals_lazy(N) ->
-    naturals_lazy(spawn(factors, naturals_server, [1]), N, N, []).
+    naturals_lazy(spawn(factors, naturals_server, [N]), N, []).
 
-naturals_lazy(_, _, 0, L) -> L;
-naturals_lazy(Pid, N, C, L) ->
-    naturals_lazy(Pid, N, C - 1, L ++ [naturals_next(Pid)]).
+naturals_lazy(_, 0, L) -> L;
+naturals_lazy(Pid, C, L) ->
+    naturals_lazy(Pid, C - 1, [naturals_next(Pid) | L]).
 
 
 % List filtration (only primes)
