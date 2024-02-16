@@ -1,6 +1,7 @@
 -module(factors).
 
 -export([is_prime/1, naturals/1]).
+-export([naturals_server/1, naturals_next/1, naturals_lazy/1]).
 -export([filter_primes/1, filter_factors/2]).
 -export([reduce_factors/1, reduce_factors_t/1]).
 -export([get_max_factor/1, get_max_factor_t/1, get_max_factor_f/1]).
@@ -25,6 +26,39 @@ naturals(N) -> naturals(N, N, []).
 
 naturals(_, 0, L) -> L;
 naturals(N, C, L) -> naturals(N, C - 1, [C | L]).
+
+
+% Lazy list generation
+naturals_server(N) ->
+    receive
+        {From, next} ->
+            From ! {self(), N},
+            naturals_server(N + 1)
+    end.
+
+naturals_next(Pid) ->
+    Pid ! {self(), next},
+    receive
+        {_From, N} -> N
+    end.
+
+
+naturals_lazy(N) ->
+    naturals_lazy(spawn(factors, naturals_server, [1]), N, N, []).
+
+naturals_lazy(_, _, 0, L) -> L;
+naturals_lazy(Pid, N, C, L) ->
+    naturals_lazy(Pid, N, C - 1, L ++ [naturals_next(Pid)]).
+
+
+% List filtration (only primes)
+filter_primes([]) -> [];
+filter_primes([H | T]) ->
+    HIsPrime = is_prime(H),
+    case HIsPrime of
+        true -> [H | filter_primes(T)];
+        false -> filter_primes(T)
+    end.
 
 
 % List filtration (only primes)
@@ -56,11 +90,11 @@ reduce_factors_t([H | T], M) when H > M -> reduce_factors_t(T, H);
 reduce_factors_t([_ | T], M) -> reduce_factors_t(T, M).
 
 
-% Generate, Filter, Filter, Reduce
+% Generate (Lazy), Filter, Filter, Reduce
 get_max_factor(0) -> error;
 get_max_factor(1) -> error;
 get_max_factor(N) ->
-    reduce_factors(filter_factors(N, filter_primes(naturals(round(math:sqrt(N)))))).
+    reduce_factors(filter_factors(N, filter_primes(naturals_lazy(round(math:sqrt(N)))))).
 
 
 % Generate, Filter, Filter, Reduce
